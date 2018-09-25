@@ -1,19 +1,16 @@
 'use strict';
 
 const express = require('express');
-const superagent = require('superagen');
+const superagent = require('superagent');
 const cors = require('cors');
-
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
 // MIddleware
 
-app.use(express.static('./public'));
-app.use(express.urlencoded({extended: true}));
-
+app.use(express.static('./views'));
+app.use(express.urlencoded({ extended: true }));
 
 // server-side templating
 app.set('view engine', 'ejs');
@@ -22,11 +19,13 @@ app.set('view engine', 'ejs');
 app.get('/', newSearch);
 
 //Creates a new search to the Google Books API
-app.post('/searches', createSearch);
+// app.post('/searches', createSearch);
+app.get('*', (request, response) =>
+  response.status(404).send('This route does not exist')
+);
 
-app.get('*', (request, response) => response.status(404).send('This route does not exist'));
+function newSearch(request, response) {
+  response.render('index');
+}
 
-app.listen(PORT, () => console.log('Listening on port: ${PORT}'));
-
-
-
+app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
