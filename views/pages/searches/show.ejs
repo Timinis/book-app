@@ -3,9 +3,15 @@
 
 <head>
   <title>Book Collection</title>
+  <link rel="stylesheet" href="/styles/reset.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/icons.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/modules.css" />
 </head>
 
 <body>
+  <div class="grid-container">
   <nav>
     <div class="burger-menu">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
@@ -19,6 +25,7 @@
     </ul>
   </nav>
   <main>
+
     <article>
       <% resultArray.forEach(item => { %>
       <div>
@@ -32,7 +39,9 @@
       </div>
       <% }) %>
     </article>
+
   </main>
+  </div>
 </body>
 
 </html>
