@@ -33,7 +33,10 @@ const undefinedChecker = bookSummary => {
   if (bookSummary.image_url === undefined) {
     bookSummary.image_url = 'Not available';
   }
+  bookSummary.author = bookSummary.author.join(', ');
 };
+
+//Temporary Search Result Array
 
 //handle error
 const handleError = (err, res) => {
@@ -46,6 +49,7 @@ app.set('view engine', 'ejs');
 
 //API Routes
 app.get('/', mainRender);
+app.get('/', createSearch);
 app.get('/searches', searchRender);
 
 //creates a new search to the Google Books API
@@ -82,8 +86,12 @@ function createSearch(request, response) {
         undefinedChecker(summary);
         return summary;
       });
-      response.send(bookResult);
+      console.log(bookResult);
+      return bookResult;
     })
+    .then(searchResult =>
+      response.render('pages/searches/show', { resultArray: searchResult })
+    )
     .catch(error => handleError(error, response));
 }
 
