@@ -17,10 +17,10 @@ app.set('view engine', 'ejs');
 
 //API Routes
 app.get('/', newSearch);
-app.get('/')
+app.get('/searches', searchRender);
 
 //creates a new search to the Google Books API
-app.post('/searches', createSearch);
+app.post('/searches/ejs', createSearch);
 
 //Catch-all
 app.get('*', (request, response) =>
@@ -29,17 +29,22 @@ app.get('*', (request, response) =>
 
 function newSearch(request, response) {
   response.render('pages/index');
+}
+
+function searchRender(request, response) {
   response.render('pages/searches/show');
 }
 
-function createSearch(request, response){
-    let url = 'https://www.googleapis.com/books/v1/volumes?q=';
-    console.log(request.body);
-    if (request.body.search[1] === 'title') { url += `+intitle:${request.body.search[0]}`; }
-    if (request.body.search[1] === 'author') { url += `+inauthor:${request.body.search[0]}`; }
+function createSearch(request, response) {
+  let url = 'https://www.googleapis.com/books/v1/volumes?q=';
+  console.log(request.body);
+  if (request.body.search[1] === 'title') {
+    url += `+intitle:${request.body.search[0]}`;
+  }
+  if (request.body.search[1] === 'author') {
+    url += `+inauthor:${request.body.search[0]}`;
+  }
 
-    superagent.get(url)
-        .then(apiResponse => console.log(apiResponse));
-    
+  superagent.get(url).then(apiResponse => console.log(apiResponse));
 }
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
