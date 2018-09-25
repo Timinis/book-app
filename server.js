@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 // MIddleware
 
-app.use(express.static('./views'));
+app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
 
 // constructor for book search result
@@ -33,7 +33,6 @@ const undefinedChecker = bookSummary => {
   if (bookSummary.image_url === undefined) {
     bookSummary.image_url = 'Not available';
   }
-  bookSummary.author = bookSummary.author.join(', ');
 };
 
 //Temporary Search Result Array
