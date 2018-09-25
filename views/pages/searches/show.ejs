@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Book Collection</title>
+</head>
+
+<body>
+  <nav>
+    <div class="burger-menu">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <ul>
+      <li>Home</li>
+    </ul>
+  </nav>
+  <main>
+    <h1>Search for Book</h1>
+    <form action="/searches" method="post">
+      <input type="text" name="search" placeholder="Enter title or author" required>
+      <fieldset>
+        <label for="title">
+          <span>Title</span>
+          <input type="radio" name="search" value="title" required>
+        </label>
+      </fieldset>
+      <fieldset>
+        <label for="author">
+          <span>Author</span>
+          <input type="radio" name="search" value="author" required>
+        </label>
+      </fieldset>
+      <button type="submit">Search for Google Books</button>
+    </form>
+  </main>
+</body>
+
+</html>
