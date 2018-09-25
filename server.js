@@ -16,18 +16,18 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 //API Routes
-app.get('/', newSearch);
+app.get('/', mainRender);
 app.get('/searches', searchRender);
 
 //creates a new search to the Google Books API
-app.post('/searches/ejs', createSearch);
+app.post('/searches', createSearch);
 
 //Catch-all
 app.get('*', (request, response) =>
   response.status(404).send('This route does not exist')
 );
 
-function newSearch(request, response) {
+function mainRender(request, response) {
   response.render('pages/index');
 }
 
@@ -37,7 +37,7 @@ function searchRender(request, response) {
 
 function createSearch(request, response) {
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
-  console.log(request.body);
+
   if (request.body.search[1] === 'title') {
     url += `+intitle:${request.body.search[0]}`;
   }
