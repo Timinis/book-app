@@ -13,35 +13,33 @@ app.use(express.static('./views'));
 app.use(express.urlencoded({ extended: true }));
 
 // constructor for book search result
-function Book (bookResults) {
-    this.title = bookResults.volumeInfo.title;
-    this.author = bookResults.volumeInfo.authors;
-    this.description = bookResults.volumeInfo.description;
-    this.image_url = bookResults.volumeInfo.imageLinks.thumbnail;
+function Book(bookResults) {
+  this.title = bookResults.volumeInfo.title;
+  this.author = bookResults.volumeInfo.authors;
+  this.description = bookResults.volumeInfo.description;
+  this.image_url = bookResults.volumeInfo.imageLinks.thumbnail;
 }
-const undefinedChecker = (bookSummary) => {
-    
-    if ('title' in bookSummary === undefined ){
-        bookSummary.title = 'Not available'
-    } 
-    if ('author' in bookSummary === undefined){
-        console.log(bookSummary.description);
-        bookSummary.author = 'Not available'
-    }
-    if ('description' in bookSummary === undefined ){
-        
-        bookSummary.description = 'Not available'
-    } 
-    if ('image_url' in bookSummary === undefined){
-        bookSummary.image_url = 'Not available'
-    }
-}
+const undefinedChecker = bookSummary => {
+  if (bookSummary.title === undefined) {
+    bookSummary.title = 'Not available';
+  }
+  if (bookSummary.author === undefined) {
+    console.log(bookSummary.description);
+    bookSummary.author = 'Not available';
+  }
+  if (bookSummary.description === undefined) {
+    bookSummary.description = 'Not available';
+  }
+  if (bookSummary.image_url === undefined) {
+    bookSummary.image_url = 'Not available';
+  }
+};
 
 //handle error
 const handleError = (err, res) => {
-    console.error(err);
-    if (res) res.status(500).send('Sorry, somethine went wrong');
-}
+  console.error(err);
+  if (res) res.status(500).send('Sorry, somethine went wrong');
+};
 
 // server-side templating
 app.set('view engine', 'ejs');
@@ -66,7 +64,6 @@ function searchRender(request, response) {
   response.render('pages/searches/show');
 }
 
-
 function createSearch(request, response) {
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
@@ -77,18 +74,17 @@ function createSearch(request, response) {
     url += `+inauthor:${request.body.search[0]}`;
   }
 
-  superagent.get(url)
-  .then(apiResponse => {
-     const bookResult = apiResponse.body.items.map(element => {
-         let summary = new Book(element);
-         undefinedChecker(summary);
-         return summary;
-     });
-     console.log(bookResult);
-     response.send(bookResult);
-})
-.catch(error => handleError(error, response));
+  superagent
+    .get(url)
+    .then(apiResponse => {
+      const bookResult = apiResponse.body.items.map(element => {
+        let summary = new Book(element);
+        undefinedChecker(summary);
+        return summary;
+      });
+      response.send(bookResult);
+    })
+    .catch(error => handleError(error, response));
 }
-
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
