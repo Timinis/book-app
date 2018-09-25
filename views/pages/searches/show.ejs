@@ -25,23 +25,21 @@
     </ul>
   </nav>
   <main>
-    <h1>Search Book by Title or Author</h1>
-    <form action="/searches" method="post">
-      <input type="text" name="search" placeholder="Enter title or author" required>
-      <fieldset>
-        <label for="title">
-          <span>Title</span>
-          <input type="radio" name="search" value="title" required>
-        </label>
-      </fieldset>
-      <fieldset>
-        <label for="author">
-          <span>Author</span>
-          <input type="radio" name="search" value="author" required>
-        </label>
-      </fieldset>
-      <button type="submit">Search for Google Books</button>
-    </form>
+
+    <article>
+      <% resultArray.forEach(item => { %>
+      <div>
+        <img src=<%=item.image_url %>>
+        <h2>
+          <%= item.title %>
+        </h2>
+        <p>
+          <%= item.author %>
+        </p>
+      </div>
+      <% }) %>
+    </article>
+
   </main>
   </div>
 </body>
