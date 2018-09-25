@@ -3,6 +3,10 @@
 const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
+const pg = require('pg');
+require('dotenv').config();
+
+const client = new pg.Client(process.env.DATABASE_URL);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +36,9 @@ const undefinedChecker = bookSummary => {
   }
   if (bookSummary.image_url === undefined) {
     bookSummary.image_url = 'Not available';
+  }
+  if (Array.isArray(bookSummary.image_url)) {
+    bookSummary.author = bookSummary.author.join(', ');
   }
 };
 
@@ -85,7 +92,6 @@ function createSearch(request, response) {
         undefinedChecker(summary);
         return summary;
       });
-      console.log(bookResult);
       return bookResult;
     })
     .then(searchResult =>
