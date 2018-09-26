@@ -26,6 +26,7 @@ function Book(bookResults) {
   this.image_url = bookResults.volumeInfo.imageLinks.thumbnail;
   this.isbn = bookResults.volumeInfo.industryIdentifiers[0].identifier;
 }
+
 const undefinedChecker = bookSummary => {
   if (bookSummary.title === undefined) {
     bookSummary.title = 'Not available';
