@@ -24,11 +24,11 @@
   </nav>
   <main>
     <article class="bookshelf">
-      <% bookShelf.forEach(item => { %>
+      <% bookShelf.forEach((item,index) => { %>
       <div>
         <img src=<%=item.image_url %>>
-        <button onclick="showHideDetail()">Detail</button>
-        <div id="detail-toggle">
+        <button onclick="showHideDetail(<%= index %>)">Detail</button>
+        <div id="detail-toggle-index<%= index %>">
           <h2>Title:
             <%= item.title %>
           </h2>
@@ -47,6 +47,8 @@
   </main>
 
   </main>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="/js/index-app.js"></script>
 </body>
 
 </html>
