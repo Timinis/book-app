@@ -30,11 +30,11 @@
   <main>
 
     <article class="book-card">
-      <% resultArray.forEach(item => { %>
+      <% resultArray.forEach((item,index) => { %>
       <div>
         <img src=<%=item.image_url %>>
-        <button onclick="showHideDetail()">Detail</button>
-        <div id="detail-toggle">
+        <button onclick="showHideDetail(<%= index %>)">Detail</button>
+        <div id="detail-toggle<%= index %>">
           <h2>Title:
             <%= item.title %>
           </h2>
