@@ -50,7 +50,7 @@ const undefinedChecker = bookSummary => {
 //handle error
 const handleError = (err, res) => {
   console.error(err);
-  if (res) res.status(500).send('Sorry, somethine went wrong');
+  res.render('pages/error', {errorRender: err})
 };
 
 // server-side templating
@@ -101,6 +101,7 @@ function createSearch(request, response) {
       response.render('pages/searches/show', { resultArray: searchResult })
     )
     .catch(error => handleError(error, response));
+
 }
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));

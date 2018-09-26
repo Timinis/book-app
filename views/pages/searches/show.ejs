@@ -10,15 +10,35 @@
   <link rel="stylesheet" href="/styles/modules.css" />
 </head>
 
-<body>
-  <div class="grid-container">
-    <nav>
-      <div class="burger-menu">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+
+<body class = "container"> 
+    <header role="banner">
+          <a class="toggle open" href="#nav-bar" title="">
+            <span class="icon-menu"><i aria-hidden="true" class="icon-menu"></i></span><span>Home</span>
+          </a>
+          </header>
+        <nav id="nav-bar" role="navigation">
+            <a class="toggle close" href="#">x</a>
+            <ul>
+        <li>Bookshelf</li>
+        <li>Menu</li>
+        <li>Search</li>
+    
+      </ul>
+    </nav>
+
+
+  <main>
+    <article class = "book-card">
+      <% resultArray.forEach(item => { %>
+      <div class = "book-content">
+        <img src=<%=item.image_url %>>
+        <h2>
+          <%= item.title %>
+        </h2>
+        <p>
+          <%= item.author %>
+        </p>
       </div>
       <ul>
         <li>Home</li>
@@ -43,8 +63,7 @@
         <% }) %>
       </article>
 
-    </main>
-  </div>
+  </main>
 </body>
 
 </html>
