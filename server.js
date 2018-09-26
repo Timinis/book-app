@@ -17,6 +17,8 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
 
 // constructor for book search result
+let searchResultArray = [];
+
 function Book(bookResults) {
   this.title = bookResults.volumeInfo.title;
   this.author = bookResults.volumeInfo.authors;
@@ -84,16 +86,16 @@ function createSearch(request, response) {
   if (request.body.search[1] === 'author') {
     url += `+inauthor:${request.body.search[0]}`;
   }
-
+  searchResultArray = [];
   superagent
     .get(url)
     .then(apiResponse => {
-      const bookResult = apiResponse.body.items.map(element => {
+      searchResultArray = apiResponse.body.items.map(element => {
         let summary = new Book(element);
         undefinedChecker(summary);
         return summary;
       });
-      return bookResult;
+      return searchResultArray;
     })
     .then(searchResult =>
       response.render('pages/searches/show', { resultArray: searchResult })
