@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Book Collection</title>
+  <link rel="stylesheet" href="/styles/reset.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/icons.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/modules.css" />
+</head>
+
+
+<body class = "container"> 
+    <header role="banner">
+          <a class="toggle open" href="#nav-bar" title="">
+            <span class="icon-menu"><i aria-hidden="true" class="icon-menu"></i></span><span>Home</span>
+          </a>
+          </header>
+        <nav id="nav-bar" role="navigation">
+            <a class="toggle close" href="#">x</a>
+            <ul>
+        <li>Bookshelf</li>
+        <li>Menu</li>
+        <li>Search</li>
+    
+      </ul>
+    </nav>
+
+
+  <main>
+    <article class = "book-card">
+      <% resultArray.forEach(item => { %>
+      <div class = "book-content">
+        <img src=<%=item.image_url %>>
+        <h2>
+          <%= item.title %>
+        </h2>
+        <p>
+          <%= item.author %>
+        </p>
+      </div>
+      <% }) %>
+    </article>
+
+  </main>
+</body>
+
+</html>
