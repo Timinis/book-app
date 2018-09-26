@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS booklist (
+CREATE TABLE IF NOT EXISTS books (
   id SERIAL PRIMARY KEY,
   title VARCHAR(255),
   author VARCHAR(255),
@@ -6,4 +6,4 @@ CREATE TABLE IF NOT EXISTS booklist (
   image_url VARCHAR(8000),
   isbn VARCHAR(8000),
   bookshelf VARCHAR(8000)
-)
+);
