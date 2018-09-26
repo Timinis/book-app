@@ -5,5 +5,5 @@ CREATE TABLE IF NOT EXISTS booklist (
   description VARCHAR(8000),
   image_url VARCHAR(8000),
   isbn VARCHAR(8000),
-  bookshelf VARCHAR(8000),
+  bookshelf VARCHAR(8000)
 )
