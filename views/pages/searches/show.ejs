@@ -32,30 +32,30 @@
             <% resultArray.forEach(item => { %>
                 <div>
                   <img src=<%=item.image_url %>>
-                  <h2>
-                    <%= item.title %>
-                  </h2>
-                  <p>
-                    <%= item.author %>
-                  </p>
-                  <p>
-                    <%= item.isbn %>
-                  </p>
-                          <form action="/save" method="post">
-          <input type="text" name="title" placeholder="Enter title" value="<%= item.title %>" required>
-          <input type="text" name="author" placeholder="Enter author" value="<%= item.author %>" required>
-          <input type="text" name="isbn" placeholder="Enter isbn" value="<%= item.isbn %>" required>
-          <input type="text" name="description" placeholder="Enter description" value="<%= item.description %>"
-            required>
-          <input type="text" name="bookshelf" placeholder="Enter bookshelf name" required>
-          <button type="submit">Add Book to Bookshelf</button>
-        </form>
+                  <button onclick="showHideDetail()">Detail</button>
+                    <div id="detail-toggle">
+                        <h2>Title: <%= item.title %></h2>
+                        <p>Author: <%= item.author %></p>
+                        <p>ISBN: <%= item.isbn %></p>
+                        <p>Description: <%= item.description %></p>
+                        <button onclick="showHide()">Save Book</button>
+                        <form id="form-toggle" action="/save" method="post">
+                            <input type="text" name="title" placeholder="Enter title" value="<%= item.title %>" required>
+                            <input type="text" name="author" placeholder="Enter author" value="<%= item.author %>" required>
+                            <input type="text" name="isbn" placeholder="Enter isbn" value="<%= item.isbn %>" required>
+                            <input type="text" name="description" placeholder="Enter description" value="<%= item.description %>"required>
+                            <input type="text" name="bookshelf" placeholder="Enter bookshelf name" required>
+                            <button type="submit">Add Book to Bookshelf</button>
+                        </form>
+                    </div>
                 </div>
                 <% }) %>
               </article>
         
 
   </main>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="/js/app.js"></script>
 </body>
 
 </html>
