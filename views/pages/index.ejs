@@ -24,11 +24,11 @@
   </nav>
   <main>
     <article class="bookshelf">
-      <% bookShelf.forEach(item => { %>
+      <% bookShelf.forEach((item,index) => { %>
       <div>
         <img src=<%=item.image_url %>>
         <button onclick="showHideDetail()">Detail</button>
-        <div id="detail-toggle">
+        <div id="detail-toggle<% index %>">
           <h2>Title:
             <%= item.title %>
           </h2>
