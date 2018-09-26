@@ -82,9 +82,11 @@ const handleError = (err, res) => {
 app.set('view engine', 'ejs');
 
 //API Routes
-app.get('/', mainRender);
+app.get('/', bookShelfRender);
 app.get('/', createSearch);
+
 app.get('/searches', searchRender);
+app.get('/searchBar', searchBarRender);
 
 //creates a new search to the Google Books API
 app.post('/searches', createSearch);
@@ -98,15 +100,13 @@ app.get('*', (request, response) =>
 );
 
 //functionality on the pages
-function mainRender(request, response) {
-  response.render('pages/index');
-}
 
 function searchRender(request, response) {
   response.render('pages/searches/show');
 }
 
 function createSearch(request, response) {
+  console.log('api is accessed');
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
   if (request.body.search[1] === 'title') {
@@ -135,5 +135,24 @@ function createSearch(request, response) {
 function saveToBookShelf(request, response) {
   let bookAdded = new BooksInShelf(request.body);
   saveBook(bookAdded);
+}
+
+function bookShelfRender(request, response) {
+  console.log('bookshelf render acted');
+  const SQL = `SELECT * FROM booklist`;
+  client
+    .query(SQL)
+    .then(result => {
+      if (result.rowCount) {
+        response.render('pages/index', { bookShelf: result.rows });
+      } else {
+        response.render('pages/search.ejs');
+      }
+    })
+    .catch(error => handleError(error, response));
+}
+
+function searchBarRender(request, response) {
+  response.render('pages/search');
 }
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
