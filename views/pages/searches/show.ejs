@@ -30,38 +30,22 @@
 
   <main>
     <article class = "book-card">
-      <% resultArray.forEach(item => { %>
-      <div class = "book-content">
-        <img src=<%=item.image_url %>>
-        <h2>
-          <%= item.title %>
-        </h2>
-        <p>
-          <%= item.author %>
-        </p>
-      </div>
-      <ul>
-        <li>Home</li>
-      </ul>
-    </nav>
-    <main>
-
-      <article>
-        <% resultArray.forEach(item => { %>
-        <div>
-          <img src=<%=item.image_url %>>
-          <h2>
-            <%= item.title %>
-          </h2>
-          <p>
-            <%= item.author %>
-          </p>
-          <p>
-            <%= item.isbn %>
-          </p>
-        </div>
-        <% }) %>
-      </article>
+            <% resultArray.forEach(item => { %>
+                <div>
+                  <img src=<%=item.image_url %>>
+                  <h2>
+                    <%= item.title %>
+                  </h2>
+                  <p>
+                    <%= item.author %>
+                  </p>
+                  <p>
+                    <%= item.isbn %>
+                  </p>
+                </div>
+                <% }) %>
+              </article>
+        
 
   </main>
 </body>
