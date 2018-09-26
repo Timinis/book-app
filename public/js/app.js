@@ -1,5 +1,11 @@
-const showHide = () => {
-  let x = document.getElementById('form-toggle');
+let maxResultLimit = 10;
+let bookNumberArray = [];
+
+for (let i = 0; i < maxResultLimit; i++) {
+  bookNumberArray.push(i);
+}
+const showHide = number => {
+  let x = document.getElementById(`form-toggle${number}`);
   if (x.style.display === 'block') {
     x.style.display = 'none';
   } else {
@@ -7,11 +13,15 @@ const showHide = () => {
   }
 };
 
-let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-numbers.forEach(number => {
+bookNumberArray.forEach(number => {
   let detail = document.getElementById(`detail-toggle${number}`);
-  detail.style.display = 'none';
+  if (detail) {
+    detail.style.display = 'none';
+  }
+  let form = document.getElementById(`form-toggle${number}`);
+  if (form) {
+    form.style.display = 'none';
+  }
 });
 
 const showHideDetail = number => {
@@ -21,4 +31,10 @@ const showHideDetail = number => {
   } else {
     x.style.display = 'block';
   }
+};
+
+const hideSubmittedBooks = number => {
+  let x = document.getElementById(`display-block-${number}`);
+  console.log(x);
+  x.style.display = 'none';
 };
