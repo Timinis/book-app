@@ -22,6 +22,7 @@ function Book(bookResults) {
   this.author = bookResults.volumeInfo.authors;
   this.description = bookResults.volumeInfo.description;
   this.image_url = bookResults.volumeInfo.imageLinks.thumbnail;
+  this.isbn = bookResults.volumeInfo.industryIdentifiers[0].identifier;
 }
 const undefinedChecker = bookSummary => {
   if (bookSummary.title === undefined) {
