@@ -8,6 +8,8 @@ require('dotenv').config();
 
 const client = new pg.Client(process.env.DATABASE_URL);
 
+client.connect();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -26,6 +28,28 @@ function Book(bookResults) {
   this.image_url = bookResults.volumeInfo.imageLinks.thumbnail;
   this.isbn = bookResults.volumeInfo.industryIdentifiers[0].identifier;
 }
+
+function BooksInShelf(submit) {
+  this.title = submit.title;
+  this.author = submit.author;
+  this.description = submit.description;
+  this.image_url = submit.image_url;
+  this.isbn = submit.isbn;
+  this.bookshelf = submit.bookshelf;
+}
+
+const saveBook = bookObj => {
+  const SQL = `INSERT INTO booklist (title, author, description, image_url, isbn, bookshelf) VALUES ($1, $2, $3, $4 ,$5, $6);`;
+  const values = [
+    bookObj.title,
+    bookObj.author,
+    bookObj.description,
+    bookObj.image_url,
+    bookObj.isbn,
+    bookObj.bookshelf
+  ];
+  return client.query(SQL, values).catch(console.error);
+};
 
 const undefinedChecker = bookSummary => {
   if (bookSummary.title === undefined) {
@@ -51,7 +75,7 @@ const undefinedChecker = bookSummary => {
 //handle error
 const handleError = (err, res) => {
   console.error(err);
-  res.render('pages/error', {errorRender: err})
+  res.render('pages/error', { errorRender: err });
 };
 
 // server-side templating
@@ -65,11 +89,15 @@ app.get('/searches', searchRender);
 //creates a new search to the Google Books API
 app.post('/searches', createSearch);
 
+//create listener on button for adding books
+app.post('/save', saveToBookShelf);
+
 //Catch-all
 app.get('*', (request, response) =>
   response.status(404).send('This route does not exist')
 );
 
+//functionality on the pages
 function mainRender(request, response) {
   response.render('pages/index');
 }
@@ -102,7 +130,10 @@ function createSearch(request, response) {
       response.render('pages/searches/show', { resultArray: searchResult })
     )
     .catch(error => handleError(error, response));
-
 }
 
+function saveToBookShelf(request, response) {
+  let bookAdded = new BooksInShelf(request.body);
+  saveBook(bookAdded);
+}
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));

@@ -11,23 +11,24 @@
 </head>
 
 
-<body class = "container"> 
-    <header role="banner">
-          <a class="toggle open" href="#nav-bar" title="">
-            <span class="icon-menu"><i aria-hidden="true" class="icon-menu"></i></span><span>Home</span>
-          </a>
-          </header>
-        <nav id="nav-bar" role="navigation">
-            <a class="toggle close" href="#">x</a>
-            <ul>
-        <li>Bookshelf</li>
-        <li>Menu</li>
-        <li>Search</li>
-    
-      </ul>
-    </nav>
+<body class="container">
+  <header role="banner">
+    <a class="toggle open" href="#nav-bar" title="">
+      <span class="icon-menu"><i aria-hidden="true" class="icon-menu"></i></span><span>Home</span>
+    </a>
+  </header>
+  <nav id="nav-bar" role="navigation">
+    <a class="toggle close" href="#">x</a>
+    <ul>
+      <li>Bookshelf</li>
+      <li>Menu</li>
+      <li>Search</li>
+
+    </ul>
+  </nav>
 
   <main>
+
     <article class = "book-card">
             <% resultArray.forEach(item => { %>
                 <div>
@@ -44,6 +45,7 @@
                             <input type="text" name="author" placeholder="Enter author" value="<%= item.author %>" required>
                             <input type="text" name="isbn" placeholder="Enter isbn" value="<%= item.isbn %>" required>
                             <input type="text" name="description" placeholder="Enter description" value="<%= item.description %>"required>
+                            <input type="text" name="image_url" placeholder="Enter image URL" value="<%= item.image_url %>" required>
                             <input type="text" name="bookshelf" placeholder="Enter bookshelf name" required>
                             <button type="submit">Add Book to Bookshelf</button>
                         </form>
