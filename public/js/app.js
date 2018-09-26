@@ -1,4 +1,5 @@
 const showHide = () => {
+    console.log('anymessage');
     let x = document.getElementById("form-toggle");
     if (x.style.display === "block") {
         x.style.display = "none";

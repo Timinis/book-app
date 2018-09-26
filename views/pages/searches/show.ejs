@@ -34,7 +34,7 @@
       <div>
         <img src=<%=item.image_url %>>
         <button onclick="showHideDetail()">Detail</button>
-        <div id="detail-toggle">
+        <div id="detail-toggle" >
           <h2>Title:
             <%= item.title %>
           </h2>
@@ -48,7 +48,7 @@
             <%= item.description %>
           </p>
           <button onclick="showHide()">Save Book</button>
-          <form id="form-toggle" action="/save" method="post">
+          <form id="form-toggle" action="/save" method="post" >
             <input type="text" name="title" placeholder="Enter title" value="<%= item.title %>" required>
             <input type="text" name="author" placeholder="Enter author" value="<%= item.author %>" required>
             <input type="text" name="isbn" placeholder="Enter isbn" value="<%= item.isbn %>" required>
