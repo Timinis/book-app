@@ -196,14 +196,17 @@ function bookShelfRender(request, response) {
             }
           })
           .then(() => {
+            console.log(bookList);
             arrayToBeSent.push({
               shelfName: bookshelf.shelf,
               listOfBooks: bookList
             });
-            console.log(arrayToBeSent);
+            if (result.rowCount === arrayToBeSent.length) {
+              console.log(arrayToBeSent);
+              response.render('pages/index', { bookShelf: arrayToBeSent });
+            }
           });
       });
-      // response.render('pages')
     } else {
       response.render('pages/search');
     }
