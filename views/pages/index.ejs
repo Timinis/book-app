@@ -33,6 +33,7 @@
         <div>
           <img src=<%=books.image_url %>>
           <button onclick="showHideDetail(<%= shelfIndex %>,<%= index %>)">Detail</button>
+          <button>Delete</button>
           <div id="detail-toggle-index<%= shelfIndex %><%= index %>">
             <h2>Title:
               <%= books.title %>
@@ -49,7 +50,7 @@
           </div>
         </div>
         <button>Edit</button>
-        <form id="edit" action="/save" method="post">
+        <form id="edit" action="/edit" method="post">
           <input type="text" name="title" placeholder="Enter title" value="<%= books.title %>" required>
           <input type="text" name="author" placeholder="Enter author" value="<%= books.author %>" required>
           <input type="text" name="isbn" placeholder="Enter isbn" value="<%= books.isbn %>" required>
@@ -65,7 +66,6 @@
           </select>
           <button type="submit" class="hide">Complete Edit</button>
         </form>
-        <button>Delete</button>
         <% }) %>
       </div>
       <% }) %>
