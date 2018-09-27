@@ -1,0 +1,34 @@
+
+      <article class="book-card">
+            <% resultArray.forEach((item,index) => { %>
+            <div id="display-block-<%= index %>">
+              <img src=<%=item.image_url %>>
+              <button onclick="showHideDetail(<%= index %>)">Detail</button>
+              <div id="detail-toggle<%= index %>">
+                <h2>Title:
+                  <%= item.title %>
+                </h2>
+                <p>Author:
+                  <%= item.author %>
+                </p>
+                <p>ISBN:
+                  <%= item.isbn %>
+                </p>
+                <p>Description:
+                  <%= item.description %>
+                </p>
+                <button onclick="showHide(<%= index %>)">Save Book</button>
+                <form id="form-toggle<%= index %>" action="/save" method="post">
+                  <input type="text" name="title" placeholder="Enter title" value="<%= item.title %>" required>
+                  <input type="text" name="author" placeholder="Enter author" value="<%= item.author %>" required>
+                  <input type="text" name="isbn" placeholder="Enter isbn" value="<%= item.isbn %>" required>
+                  <input type="text" name="description" placeholder="Enter description" value="<%= item.description %>"
+                    required>
+                  <input type="text" name="image_url" placeholder="Enter image URL" value="<%= item.image_url %>" required>
+                  <input type="text" name="bookshelf" placeholder="Enter bookshelf name" value="default" required>
+                  <button type="submit" onclick="hideSubmittedBooks(<%= index %>)">Add Book to Bookshelf</button>
+                </form>
+              </div>
+            </div>
+            <% }) %>
+          </article>
