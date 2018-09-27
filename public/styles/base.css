@@ -26,7 +26,7 @@
     grid-template-columns: 1fr;
     min-height: 100vh;
     background-color: #8e8d8a;
-    color: #e98074;
+    color: #8e8d8a;
     grid-template-areas:  "sidebar"
                           "navbar"
                           "content"
@@ -83,15 +83,71 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
 
+ 
+  #detailsDescription {display:block;}
+  .hide_description #detailsDescription {display:none;}
+  .show {display:none;}
+  .hide {display:inline;}
+  .hide_description .show {display:inline;}
+  .hide_description .hide {display:none;}
 
   #detail-toggle{
     display: none;
+    z-index: 5000;
+    height: 200px;
+    width: 200px;
+    
   }
 
  #form-toggle{
     display: none;
   }
 
+  button {
+    background: #89BDD3;
+    border: 0;
+    border-radius: 4px;
+    padding: 7px 15px;
+    font-size: 16px;
+    color: #FFFFFF;
+    cursor: pointer;
+  
+    &:focus {
+      outline: none;
+    }
+  
+    &:hover {
+      background: lighten(#89BDD3, 10%);
+    }
+  }
+  
+  #popup {
+    background: rgba(100, 100, 100, 0.6);
+    position: fixed;
+    display: none;
+    z-index: 5000;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+  
+    > form {
+      border-radius: 10px;
+      position: fixed;
+      background: #FFFFFF;
+      box-shadow: 0px 0px 15px 0px rgba(#000000, 0.3);
+      padding: 30px 15px;
+      /* Width of popup can be changed */
+      width: 70%;
+      max-width: 600px;
+      z-index: 5001;
+      @include transform(translate(-50%, -50%));
+        left: 50%;
+       top: 50%;
+      text-align: center;
+      border: 5px solid #9AD3DE;
+    }
+  }
 @media only screen and (min-width: 600px){
     .container{
         display: grid;
