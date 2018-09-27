@@ -24,24 +24,31 @@
   </nav>
   <main>
     <article class="bookshelf">
-      <% bookShelf.forEach((item,index) => { %>
+      <% bookShelf.forEach((item,shelfIndex) => { %>
+      <h1>
+        <%= item.shelfName %>
+      </h1>
       <div>
-        <img src=<%=item.image_url %>>
-        <button onclick="showHideDetail(<%= index %>)">Detail</button>
-        <div id="detail-toggle-index<%= index %>">
-          <h2>Title:
-            <%= item.title %>
-          </h2>
-          <p>Author:
-            <%= item.author %>
-          </p>
-          <p>ISBN:
-            <%= item.isbn %>
-          </p>
-          <p>Description:
-            <%= item.description %>
-          </p>
+        <% item.listOfBooks.forEach((books,index)=> { %>
+        <div>
+          <img src=<%=books.image_url %>>
+          <button onclick="showHideDetail(<%= shelfIndex %>,<%= index %>)">Detail</button>
+          <div id="detail-toggle-index<%= shelfIndex %><%= index %>">
+            <h2>Title:
+              <%= books.title %>
+            </h2>
+            <p>Author:
+              <%= books.author %>
+            </p>
+            <p>ISBN:
+              <%= books.isbn %>
+            </p>
+            <p>Description:
+              <%= books.description %>
+            </p>
+          </div>
         </div>
+        <% }) %>
       </div>
       <% }) %>
   </main>
