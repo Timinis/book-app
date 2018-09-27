@@ -48,16 +48,32 @@
             </p>
           </div>
         </div>
+        <button>Edit</button>
+        <form id="edit" action="/save" method="post">
+          <input type="text" name="title" placeholder="Enter title" value="<%= books.title %>" required>
+          <input type="text" name="author" placeholder="Enter author" value="<%= books.author %>" required>
+          <input type="text" name="isbn" placeholder="Enter isbn" value="<%= books.isbn %>" required>
+          <input type="text" name="description" placeholder="Enter description" value="<%= books.description %>"
+            required>
+          <input type="text" name="image_url" placeholder="Enter image URL" value="<%= books.image_url %>" required>
+          <select>
+            <% bookShelf.forEach((tableName,shelfIndex) => { %>
+            <option value="<%= tableName.shelfName %>">
+              <%= tableName.shelfName %>
+            </option>
+            <% }) %>
+          </select>
+          <button type="submit" class="hide">Complete Edit</button>
+        </form>
+        <button>Delete</button>
         <% }) %>
       </div>
       <% }) %>
   </main>
 
   </main>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
   <script type="text/javascript" src="/js/index-app.js"></script>
 </body>
 
