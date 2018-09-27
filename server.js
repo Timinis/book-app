@@ -214,3 +214,4 @@ function searchBarRender(request, response) {
   response.render('pages/search');
 }
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+
