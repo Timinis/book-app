@@ -35,20 +35,38 @@ function BooksInShelf(submit) {
   this.description = submit.description;
   this.image_url = submit.image_url;
   this.isbn = submit.isbn;
-  this.bookshelf = submit.bookshelf;
+  this.bookshelf = submit.bookshelf.toLowerCase();
 }
 
 const saveBook = bookObj => {
-  const SQL = `INSERT INTO booklist (title, author, description, image_url, isbn, bookshelf) VALUES ($1, $2, $3, $4 ,$5, $6);`;
+  const SQL = `INSERT INTO ${
+    bookObj.bookshelf
+  } (title, author, description, image_url, isbn) VALUES ($1, $2, $3, $4 ,$5);`;
   const values = [
     bookObj.title,
     bookObj.author,
     bookObj.description,
     bookObj.image_url,
-    bookObj.isbn,
-    bookObj.bookshelf
+    bookObj.isbn
   ];
-  return client.query(SQL, values).catch(console.error);
+  client.query(SQL, values).catch(console.error);
+};
+
+const saveShelf = bookshelf => {
+  const SQL = `INSERT INTO Overall (shelf) VALUES ($1)`;
+  const values = [bookshelf];
+  client.query(SQL, values).catch(console.error);
+};
+
+const createTable = bookObj => {
+  const create = `CREATE TABLE IF NOT EXISTS ${bookObj.bookshelf} (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255),
+  author VARCHAR(255),
+  description VARCHAR(8000),
+  image_url VARCHAR(8000),
+  isbn VARCHAR(8000));`;
+  client.query(create).catch(console.error);
 };
 
 const undefinedChecker = bookSummary => {
@@ -56,7 +74,6 @@ const undefinedChecker = bookSummary => {
     bookSummary.title = 'Not available';
   }
   if (bookSummary.author === undefined) {
-    console.log(bookSummary.description);
     bookSummary.author = 'Not available';
   }
   if (bookSummary.description === undefined) {
@@ -106,7 +123,6 @@ function searchRender(request, response) {
 }
 
 function createSearch(request, response) {
-  console.log('api is accessed');
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
   if (request.body.search[1] === 'title') {
@@ -132,24 +148,66 @@ function createSearch(request, response) {
     .catch(error => handleError(error, response));
 }
 
+function storageToDB(request, result) {
+  for (let i = 0; i < result.rows.length; i++) {
+    if (request.bookshelf === result.rows[i].shelf) {
+      console.log(request.bookshelf);
+      console.log(result.rows[i].shelf);
+      let bookToSave = new BooksInShelf(request);
+      saveBook(bookToSave);
+      return;
+    }
+  }
+  let bookToSave = new BooksInShelf(request);
+  createTable(bookToSave);
+  saveShelf(bookToSave.bookshelf);
+  saveBook(bookToSave);
+  return;
+}
+
 function saveToBookShelf(request, response) {
-  let bookAdded = new BooksInShelf(request.body);
-  saveBook(bookAdded);
+  const SQL = `SELECT * FROM Overall`;
+  client.query(SQL).then(result => {
+    if (result.rowCount === 0) {
+      saveShelf('shelf');
+
+      client.query(SQL).then(res => {
+        storageToDB(request.body, res);
+      });
+    } else {
+      storageToDB(request.body, result);
+    }
+  });
 }
 
 function bookShelfRender(request, response) {
-  console.log('bookshelf render acted');
-  const SQL = `SELECT * FROM booklist`;
-  client
-    .query(SQL)
-    .then(result => {
-      if (result.rowCount) {
-        response.render('pages/index', { bookShelf: result.rows });
-      } else {
-        response.render('pages/search.ejs');
-      }
-    })
-    .catch(error => handleError(error, response));
+  const SQL = `SELECT * FROM Overall`;
+  let arrayToBeSent = [];
+  client.query(SQL).then(result => {
+    if (result.rowCount) {
+      result.rows.forEach(bookshelf => {
+        let bookList = [];
+        const innerSQL = `SELECT * FROM ${bookshelf.shelf}`;
+        client
+          .query(innerSQL)
+          .then(res => {
+            if (res.rows) {
+              res.rows.forEach(obj => bookList.push(obj));
+            }
+          })
+          .then(() => {
+            arrayToBeSent.push({
+              shelfName: bookshelf.shelf,
+              listOfBooks: bookList
+            });
+            console.log(arrayToBeSent);
+          });
+      });
+      // response.render('pages')
+    } else {
+      response.render('pages/search');
+    }
+  });
 }
 
 function searchBarRender(request, response) {
