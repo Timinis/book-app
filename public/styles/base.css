@@ -203,3 +203,7 @@
 }
 
 }
+
+.hidden{
+  display: none;
+}
