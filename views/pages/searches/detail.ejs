@@ -9,8 +9,8 @@
       <p>Author:<%= item.author %></p>
       <p>ISBN:<%= item.isbn %></p>
       <p>Description:<%= item.description %></p>
-      <button type="submit" >Add Book to Bookshelf</button>
-        <form id="form-toggle<%= index %>" action="/save" method="post">
+      <button type="submit" class="addBook">Add Book to Bookshelf</button>
+        <form id="form-toggle<%= index %>" action="/save" method="post" class="hiddenForm">
           <input type="text" name="title" placeholder="Enter title" value="<%= item.title %>" required>
           <input type="text" name="author" placeholder="Enter author" value="<%= item.author %>" required>
           <input type="text" name="isbn" placeholder="Enter isbn" value="<%= item.isbn %>" required>
